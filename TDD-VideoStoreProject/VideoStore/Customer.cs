@@ -8,11 +8,13 @@ namespace VideoStore
 {
    public class Customer
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Ssn { get; set; }
-        public Customer(string name, string ssn)
+        public Customer(string firstName, string lastName, string ssn)
         {
-            this.Name = name;
+            this.FirstName = firstName;
+            this.LastName = lastName;
             this.Ssn = ssn;
         }
         public Customer()
