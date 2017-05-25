@@ -44,16 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="RentalTests.cs" />
+    <Compile Include="VideoStoreTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\VideoStore\VideoStore.csproj">
+    <ProjectReference Include="..\VideoStore\VideoStoreBL.csproj">
       <Project>{3c022d44-5633-4d32-a9b8-eba57c86f54a}</Project>
-      <Name>VideoStore</Name>
+      <Name>VideoStoreBL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
