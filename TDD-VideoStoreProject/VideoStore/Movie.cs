@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace VideoStore
 {
+
+    public enum MovieGenre
+    {
+        Comedy, Action, Thriller, Documentary
+    }
     public class Movie
     {
-        public string MovieTitle { get; set; }
-
-        public Movie(string movieTitle)
+        public string Title { get; set; }
+        public MovieGenre Genre { get; set; }
+        public Movie(string title, MovieGenre genre)
         {
-            this.MovieTitle = movieTitle;
+            this.Title = title;
+            this.Genre = genre;
         }
-
+        public Movie() { }
     }
 }
