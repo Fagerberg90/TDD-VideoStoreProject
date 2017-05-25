@@ -8,5 +8,12 @@ namespace VideoStore
 {
     public class Movie
     {
+        public string MovieTitle { get; set; }
+
+        public Movie(string movieTitle)
+        {
+            this.MovieTitle = movieTitle;
+        }
+
     }
 }

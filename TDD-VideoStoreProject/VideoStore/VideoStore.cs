@@ -8,6 +8,11 @@ namespace VideoStore
 {
     public class VideoStore : IVideoStore
     {
+        public List<Movie> MoviesList { get; set; }
+
+
+
+
         public void AddMovie(Movie movie)
         {
             throw new NotImplementedException();
