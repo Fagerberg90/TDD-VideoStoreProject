@@ -15,4 +15,8 @@ namespace VideoStoreBL
     {
         
     }
+    public class DuplicateCustomerException : Exception
+    {
+
+    }
 }

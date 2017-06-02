@@ -10,7 +10,7 @@ namespace VideoStoreBL
     public class VideoStore : IVideoStore
     {
         public List<Movie> MoviesList { get; set; }
-
+        public List<Customer> CustomerList { get; set; } = new List<Customer>();
         public IRentals Irentals { get; set; }
 
         
@@ -46,9 +46,16 @@ namespace VideoStoreBL
             throw new NotImplementedException();
         }
 
-        public void RegisterCustomer(string name, string socialSecurityNumber)
+        public void RegisterCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            if (CustomerList.Any(x => x.Ssn == customer.Ssn))
+            {
+                throw new DuplicateCustomerException();
+            }
+            else
+            {
+                CustomerList.Add(customer);
+            }
         }
 
         public void RentMovie(string movieTitle, string socialSecurityNumber)

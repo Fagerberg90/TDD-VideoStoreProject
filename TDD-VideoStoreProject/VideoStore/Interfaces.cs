@@ -8,7 +8,7 @@ namespace VideoStoreBL
 {
     public interface IVideoStore
     {
-        void RegisterCustomer(string name, string socialSecurityNumber);
+        void RegisterCustomer(Customer customer);
         void AddMovie(Movie movie);
         void RentMovie(string movieTitle, string socialSecurityNumber);
         List<Customer> GetCustomers();

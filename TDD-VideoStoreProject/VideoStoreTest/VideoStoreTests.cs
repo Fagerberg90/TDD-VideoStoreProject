@@ -57,5 +57,14 @@ namespace VideoStoreTest
 
         }
 
+        [Test]
+        public void NoDuplicatedCustomers()
+        {
+            sut.RegisterCustomer(TestCustomer);
+            Assert.Throws<DuplicateCustomerException>(() => {
+                sut.RegisterCustomer(TestCustomer);
+            });
+        }
+
     }
 }
