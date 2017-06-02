@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace VideoStoreBL
@@ -13,11 +14,11 @@ namespace VideoStoreBL
         public List<Customer> CustomerList { get; set; } = new List<Customer>();
         public IRentals Irentals { get; set; }
 
-        
+
 
         public VideoStore(IRentals irental)
         {
-            this.Irentals = irental;   
+            this.Irentals = irental;
         }
 
 
@@ -48,14 +49,17 @@ namespace VideoStoreBL
 
         public void RegisterCustomer(Customer customer)
         {
+            Regex rex = new Regex(@"\d{4}-\d{2}-\d{2}");
+            if (!rex.IsMatch(customer.Ssn))
+            {
+                throw new NotvalidSsnException();
+            }
             if (CustomerList.Any(x => x.Ssn == customer.Ssn))
             {
                 throw new DuplicateCustomerException();
             }
-            else
-            {
-                CustomerList.Add(customer);
-            }
+            CustomerList.Add(customer);
+
         }
 
         public void RentMovie(string movieTitle, string socialSecurityNumber)

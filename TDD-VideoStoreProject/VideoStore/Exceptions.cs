@@ -19,4 +19,8 @@ namespace VideoStoreBL
     {
 
     }
+    public class NotvalidSsnException : Exception
+    {
+
+    }
 }

@@ -26,7 +26,7 @@ namespace VideoStoreTest
             TestCustomer = new Customer(
                  "Olle",
                  "Pettersson",
-                 "2233-9922"
+                 "1850-09-22"
                 );
 
             TestMovie = new Movie(
@@ -62,6 +62,15 @@ namespace VideoStoreTest
         {
             sut.RegisterCustomer(TestCustomer);
             Assert.Throws<DuplicateCustomerException>(() => {
+                sut.RegisterCustomer(TestCustomer);
+            });
+        }
+
+        [Test]
+        public void AddingCustomerWithInvalidSsn()
+        {
+            TestCustomer.Ssn = "1555-555-55";
+            Assert.Throws<NotvalidSsnException>(() => {
                 sut.RegisterCustomer(TestCustomer);
             });
         }
