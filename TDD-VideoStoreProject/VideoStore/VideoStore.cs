@@ -4,18 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VideoStore
+namespace VideoStoreBL
 {
     public class VideoStore : IVideoStore
     {
         public List<Movie> MoviesList { get; set; }
 
+        public IRentals Irentals { get; set; }
 
+        
+
+        public VideoStore(IRentals irental)
+        {
+            this.Irentals = irental;   
+        }
 
 
         public void AddMovie(Movie movie)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(movie.Title))
+            {
+                throw new MovieTitleEmptyException();
+            }
         }
 
         public List<Customer> GetCustomers()

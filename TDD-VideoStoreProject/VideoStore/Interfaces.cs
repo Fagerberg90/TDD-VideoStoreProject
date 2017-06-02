@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VideoStore
+namespace VideoStoreBL
 {
     public interface IVideoStore
     {
@@ -14,10 +14,14 @@ namespace VideoStore
         List<Customer> GetCustomers();
         void ReturnMovie(string movieTitle, string socialSecurityNumber);
     }
-    public interface IRentals
+    public interface IRentals 
     {
         void AddRental(string movieTitle, string socialSecurityNumber);
         void RemoveRental(string movieTitle, string socialSecurityNumber);
         List<Rental> GetRentalsFor(string socialSecurityNumber);
+    }
+    public interface IDateTime
+    {
+        DateTime Now();
     }
 }

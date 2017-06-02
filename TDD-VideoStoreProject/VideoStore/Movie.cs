@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VideoStore
+namespace VideoStoreBL
 {
 
     public enum MovieGenre
     {
-        Comedy, Action, Thriller, Documentary
+        Comedy, Action, Thriller, Documentary, SciFi
     }
     public class Movie
     {

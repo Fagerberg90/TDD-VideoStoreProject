@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace VideoStoreBL
 {
-    class Program
+    public class MovieTitleEmptyException : Exception
     {
-        static void Main(string[] args)
-        {
-        }
+
     }
 }
