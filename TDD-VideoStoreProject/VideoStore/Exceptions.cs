@@ -10,4 +10,9 @@ namespace VideoStoreBL
     {
 
     }
+
+    public class TooManyIdenticalMoviesException : Exception
+    {
+        
+    }
 }

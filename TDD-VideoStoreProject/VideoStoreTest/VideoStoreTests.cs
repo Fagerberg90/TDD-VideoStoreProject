@@ -45,5 +45,17 @@ namespace VideoStoreTest
             });
         }
 
+        [Test]
+        public void CannotAddMoreThanThreeIdenticalMovies()
+        {
+            sut.AddMovie(TestMovie);
+            sut.AddMovie(TestMovie);
+            sut.AddMovie(TestMovie);
+            Assert.Throws<TooManyIdenticalMoviesException>(() => {
+                sut.AddMovie(TestMovie);
+            });
+
+        }
+
     }
 }
