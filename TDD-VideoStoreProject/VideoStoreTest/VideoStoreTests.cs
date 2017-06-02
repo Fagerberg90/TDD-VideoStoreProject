@@ -75,5 +75,22 @@ namespace VideoStoreTest
             });
         }
 
+        [Test]
+        public void CanRegisterCustomer()
+        {
+            sut.RegisterCustomer(TestCustomer);
+            var result = sut.GetCustomers();
+            Assert.IsNotNull(result);
+        }
+
+        [Test]
+        public void NotBeAbleToRentANonExistentMovie()
+        {
+            sut.AddMovie(TestMovie);
+            TestMovie.Title = "Kalle Anka";
+            sut.RegisterCustomer(TestCustomer);
+            rentals.AddRental(TestMovie.Title, TestCustomer.Ssn);
+        }
+
     }
 }

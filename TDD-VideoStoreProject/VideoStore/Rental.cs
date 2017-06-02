@@ -6,21 +6,17 @@ using System.Threading.Tasks;
 
 namespace VideoStoreBL
 {
-    public class Rental : IRentals
+    public class Rental
     {
-        public void AddRental(string movieTitle, string socialSecurityNumber)
+       public DateTime DueDate { get; set; }
+        public string MovieTitle { get; set; }
+        public string CustomerSsn { get; set; }
+    
+        public Rental(DateTime dueDate, string movieTitle,string customerSsn)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Rental> GetRentalsFor(string socialSecurityNumber)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRental(string movieTitle, string socialSecurityNumber)
-        {
-            throw new NotImplementedException();
+            DueDate = dueDate;
+            MovieTitle = movieTitle;
+            CustomerSsn = customerSsn;
         }
     }
 }
