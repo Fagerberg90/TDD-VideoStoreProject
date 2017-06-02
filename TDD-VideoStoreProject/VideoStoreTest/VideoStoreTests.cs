@@ -21,6 +21,8 @@ namespace VideoStoreTest
         [SetUp]
         public void Setup()
         {
+            rentals = Substitute.For<IRentals>();
+            sut = new VideoStore(rentals);
             TestCustomer = new Customer(
                  "Olle",
                  "Pettersson",
@@ -31,10 +33,6 @@ namespace VideoStoreTest
                 "Star Wars",
                  MovieGenre.SciFi
                 );
-
-            rentals = Substitute.For<IRentals>();
-            var sut = new VideoStore(rentals);
-
         }
 
         [Test]
@@ -42,10 +40,7 @@ namespace VideoStoreTest
         {
             TestMovie.Title = "";
 
-            
-
             Assert.Throws<MovieTitleEmptyException>(() => {
-
                 sut.AddMovie(TestMovie);
             });
         }
