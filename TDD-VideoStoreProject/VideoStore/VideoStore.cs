@@ -44,7 +44,7 @@ namespace VideoStoreBL
 
         public List<Customer> GetCustomers()
         {
-            throw new NotImplementedException();
+            return CustomerList;
         }
 
         public void RegisterCustomer(Customer customer)
