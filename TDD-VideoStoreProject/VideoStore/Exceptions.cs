@@ -34,4 +34,9 @@ namespace VideoStoreBL
     {
         
     }
+
+    public class CustomerDoesNotHaveAnyRentals : Exception
+    {
+        
+    }
 }
