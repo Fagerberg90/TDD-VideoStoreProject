@@ -18,7 +18,7 @@ namespace VideoStoreBL
 
         public void AddRental(string movieTitle, string socialSecurityNumber)
         {
-            var newRental = new Rental(DateTime.Now, movieTitle, socialSecurityNumber);
+            var newRental = new Rental(DateTime.Now.AddDays(3), movieTitle, socialSecurityNumber);
 
             Rentals.Add(newRental);
 

@@ -36,7 +36,21 @@ namespace VideoStoreTest
             Assert.AreEqual(rentals.Count,1);
         }
 
+        [Test]
+        public void GetBackMoviesAfterthreeDays()
+        {
+           sut.AddRental("Transporter2","1988-02-15");
 
+            var rentals = sut.GetRentalsFor("1988-02-15");
+
+           
+      Assert.AreEqual(rentals[0].DueDate,dateTime.Now().AddDays(3));
+
+
+
+
+
+        }
 
         
 

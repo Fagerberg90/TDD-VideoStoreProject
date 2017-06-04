@@ -39,4 +39,9 @@ namespace VideoStoreBL
     {
         
     }
+
+    public class LateRentalsReturn : Exception
+    {
+        
+    }
 }
