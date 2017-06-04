@@ -18,11 +18,30 @@ namespace VideoStoreBL
 
         public void AddRental(string movieTitle, string socialSecurityNumber)
         {
-            var newRental = new Rental(DateTime.Now.AddDays(3), movieTitle, socialSecurityNumber);
+            try
+            {
+                if (GetRentalsFor(socialSecurityNumber).Any(x => x.MovieTitle == movieTitle))
+                {
+                    throw new RentTwoCopiesOfSameMovieException();
+                }
+                if (GetRentalsFor(socialSecurityNumber).Count >= 3)
+                {
+                    throw new TooManyRentalsException();
+                }
+                else
+                {
+                 
+                    var newRental = new Rental(DateTime.Now.AddDays(3), movieTitle, socialSecurityNumber);
 
-            Rentals.Add(newRental);
+                    Rentals.Add(newRental);
+                }
+            }
+            catch (CustomerDoesNotHaveAnyRentalsException)
+            {
+                var newRental = new Rental(DateTime.Now.AddDays(3), movieTitle, socialSecurityNumber);
 
-
+                Rentals.Add(newRental);
+            }
         }
 
         public List<Rental> GetRentalsFor(string socialSecurityNumber)
@@ -34,7 +53,7 @@ namespace VideoStoreBL
             }
             else
             {
-                throw new CustomerDoesNotHaveAnyRentals();
+                throw new CustomerDoesNotHaveAnyRentalsException();
             }
         }
 

@@ -6,42 +6,24 @@ using System.Threading.Tasks;
 
 namespace VideoStoreBL
 {
-    public class MovieTitleEmptyException : Exception
-    {
+    public class MovieTitleEmptyException : Exception { }
+    
+    public class TooManyIdenticalMoviesException : Exception { }
 
-    }
+    public class DuplicateCustomerException : Exception { }
 
-    public class TooManyIdenticalMoviesException : Exception
-    {
-        
-    }
-    public class DuplicateCustomerException : Exception
-    {
+    public class NotvalidSsnException : Exception { }
 
-    }
-    public class NotvalidSsnException : Exception
-    {
+    public class CustomerDoesNotExistException : Exception { }
 
-    }
+    public class MovieDoesNotExistException : Exception { }
 
-    public class CustomerDoesNotExistException : Exception
-    {
-        
-    }
+    public class CustomerDoesNotHaveAnyRentalsException : Exception { }
 
+    public class LateRentalsReturnException : Exception { }
 
-    public class MovieDoesNotExistException : Exception
-    {
-        
-    }
+    public class TooManyRentalsException : Exception { }
+    
+    public class RentTwoCopiesOfSameMovieException : Exception { }
 
-    public class CustomerDoesNotHaveAnyRentals : Exception
-    {
-        
-    }
-
-    public class LateRentalsReturn : Exception
-    {
-        
-    }
 }
