@@ -10,7 +10,7 @@ namespace VideoStoreBL
 {
     public class VideoStore : IVideoStore
     {
-        public List<Movie> MoviesList { get; set; }
+        public List<Movie> MoviesList { get; set; } = new List<Movie>();
         public List<Customer> CustomerList { get; set; } = new List<Customer>();
         public IRentals Irentals { get; set; }
 
