@@ -23,4 +23,15 @@ namespace VideoStoreBL
     {
 
     }
+
+    public class CustomerDoesNotExistException : Exception
+    {
+        
+    }
+
+
+    public class MovieDoesNotExistException : Exception
+    {
+        
+    }
 }

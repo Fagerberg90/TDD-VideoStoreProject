@@ -86,10 +86,15 @@ namespace VideoStoreTest
         [Test]
         public void NotBeAbleToRentANonExistentMovie()
         {
-            sut.AddMovie(TestMovie);
+            
             TestMovie.Title = "Kalle Anka";
             sut.RegisterCustomer(TestCustomer);
             rentals.AddRental(TestMovie.Title, TestCustomer.Ssn);
+
+            Assert.Throws<MovieDoesNotExistException>(() =>
+            {
+                sut.RentMovie(TestMovie.Title, TestCustomer.Ssn);
+            });
         }
 
     }

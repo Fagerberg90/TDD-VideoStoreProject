@@ -12,7 +12,11 @@ namespace VideoStoreBL
 
         public void AddRental(string movieTitle, string socialSecurityNumber)
         {
-            
+             var newRental = new Rental(DateTime.Now,movieTitle,socialSecurityNumber);
+
+              Rentals.Add(newRental);
+
+
         }
 
         public List<Rental> GetRentalsFor(string socialSecurityNumber)
