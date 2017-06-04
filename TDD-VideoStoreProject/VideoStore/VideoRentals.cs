@@ -27,24 +27,15 @@ namespace VideoStoreBL
 
         public List<Rental> GetRentalsFor(string socialSecurityNumber)
         {
-
             if (Rentals.Any(x => x.CustomerSsn == socialSecurityNumber))
             {
                 var result = Rentals.Where(x => x.CustomerSsn == socialSecurityNumber).ToList();
-
                 return result;
-
             }
             else
             {
                 throw new CustomerDoesNotHaveAnyRentals();
             }
-
-
-            
-
-
-
         }
 
         public void RemoveRental(string movieTitle, string socialSecurityNumber)

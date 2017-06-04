@@ -14,9 +14,6 @@ namespace VideoStoreTest
     {
         private IRentals sut;
         private IDateTime dateTime;
-        
-
-
 
         [SetUp]
         public void Setup()
@@ -30,30 +27,24 @@ namespace VideoStoreTest
         [Test]
         public void CanAddRental()
         {
-            sut.AddRental("Transporter","1988-02-15");
+            sut.AddRental("Transporter", "1988-02-15");
             var rentals = sut.GetRentalsFor("1988-02-15");
 
-            Assert.AreEqual(rentals.Count,1);
+            Assert.AreEqual(rentals.Count, 1);
         }
 
         [Test]
         public void GetBackMoviesAfterthreeDays()
         {
-           sut.AddRental("Transporter2","1988-02-15");
+            sut.AddRental("Transporter2", "1988-02-15");
 
             var rentals = sut.GetRentalsFor("1988-02-15");
-
-           
-      Assert.AreEqual(rentals[0].DueDate,dateTime.Now().AddDays(3));
-
-
-
-
-
+            var expected = DateTime.Now.AddDays(3).Date;
+            Assert.AreEqual(expected, rentals[0].DueDate.Date);
         }
 
-        
 
-    } 
+
+    }
 
 }
