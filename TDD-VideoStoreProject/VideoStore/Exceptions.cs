@@ -20,10 +20,20 @@ namespace VideoStoreBL
 
     public class CustomerDoesNotHaveAnyRentalsException : Exception { }
 
-    public class LateRentalsReturnException : Exception { }
-
     public class TooManyRentalsException : Exception { }
     
     public class RentTwoCopiesOfSameMovieException : Exception { }
+
+    public class LateRentalsReturnException : Exception
+    {
+        public LateRentalsReturnException(string message) : base(message)
+        {
+
+        }
+    }
+    public static class ExeptionMessages
+    {
+        public const string LateRentalsReturnExceptionMessage = "Customer still has delayed movies that need to be returned before renting a new one.";
+    }
 
 }

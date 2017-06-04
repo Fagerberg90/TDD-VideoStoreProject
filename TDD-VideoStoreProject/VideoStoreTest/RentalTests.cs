@@ -83,6 +83,19 @@ namespace VideoStoreTest
                 sut.AddRental("Transporter2", "1988-02-15");
             });
         }
+
+        [Test]
+        public void CustomerWithLateDueDateCanNotRentNewMovie()
+        {
+            sut.AddRental("Die hard", "19880606");
+            var rentals = sut.GetRentalsFor("19880606");
+            rentals[0].DueDate = DateTime.Now.AddDays(-4);
+
+            Assert.Throws<LateRentalsReturnException>(() =>
+            {
+                sut.AddRental("Die hard2", "19880606");
+            });
+        }
     }
 
 }

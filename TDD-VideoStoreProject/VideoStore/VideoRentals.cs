@@ -20,6 +20,10 @@ namespace VideoStoreBL
         {
             try
             {
+                if (GetRentalsFor(socialSecurityNumber).Any(x => x.DueDate.Date <= DateTime.Now.Date))
+                {
+                    throw new LateRentalsReturnException(ExeptionMessages.LateRentalsReturnExceptionMessage);
+                }
                 if (GetRentalsFor(socialSecurityNumber).Any(x => x.MovieTitle == movieTitle))
                 {
                     throw new RentTwoCopiesOfSameMovieException();
@@ -30,7 +34,6 @@ namespace VideoStoreBL
                 }
                 else
                 {
-                 
                     var newRental = new Rental(DateTime.Now.AddDays(3), movieTitle, socialSecurityNumber);
 
                     Rentals.Add(newRental);
