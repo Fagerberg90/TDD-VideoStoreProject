@@ -19,7 +19,7 @@ namespace VideoStoreTest
         public void Setup()
         {
             dateTime = Substitute.For<IDateTime>();
-            dateTime.Now().Returns(dateTime.Now());
+            dateTime.Now().Returns(DateTime.Now);
             sut = new VideoRentals(dateTime);
 
         }
@@ -27,36 +27,36 @@ namespace VideoStoreTest
         [Test]
         public void CanAddRental()
         {
-            sut.AddRental("Transporter", "1988-02-15");
+            sut.AddRental("Avatar", "1988-02-15");
             var rentals = sut.GetRentalsFor("1988-02-15");
 
             Assert.AreEqual(rentals.Count, 1);
         }
-        //Refactor later?
+      
         [Test]
         public void GetBackMoviesAfterthreeDays()
         {
-            sut.AddRental("Transporter2", "1988-02-15");
+            sut.AddRental("Avatar2", "1988-02-15");
 
             var rentals = sut.GetRentalsFor("1988-02-15");
-            var expected = DateTime.Now.AddDays(3).Date;
+            var expected = dateTime.Now().AddDays(3).Date;
             Assert.AreEqual(expected, rentals[0].DueDate.Date);
         }
 
         [Test]
         public void GetRentalsBySsn()
         {
-            sut.AddRental("Transporter2", "1988-02-15");
+            sut.AddRental("Avatar2", "1988-02-15");
 
             var rentals = sut.GetRentalsFor("1988-02-15");
-            Assert.AreEqual(rentals[0].MovieTitle, "Transporter2");
+            Assert.AreEqual(rentals[0].MovieTitle, "Avatar2");
         }
 
         [Test]
         public void CustomerCanRentMoreThanOneMovie()
         {
-            sut.AddRental("Transporter2", "1988-02-15");
-            sut.AddRental("Transporter3", "1988-02-15");
+            sut.AddRental("Avatar2", "1988-02-15");
+            sut.AddRental("Avatar3", "1988-02-15");
 
             var rentals = sut.GetRentalsFor("1988-02-15");
             Assert.AreEqual(rentals.Count, 2);
@@ -65,22 +65,22 @@ namespace VideoStoreTest
         [Test]
         public void CustomerCanNotRentMoreThanThreeMovies()
         {
-            sut.AddRental("Transporter2", "1988-02-15");
-            sut.AddRental("Transporter3", "1988-02-15");
-            sut.AddRental("Transporter4", "1988-02-15");
+            sut.AddRental("Avatar2", "1988-02-15");
+            sut.AddRental("Avatar3", "1988-02-15");
+            sut.AddRental("Avatar4", "1988-02-15");
 
             Assert.Throws<TooManyRentalsException>(() => {
-                sut.AddRental("Transporter5", "1988-02-15");
+                sut.AddRental("Avatar5", "1988-02-15");
             });
         }
 
         [Test]
         public void CustomerCanNotRentTwoCopiesOfSameMovie()
         {
-            sut.AddRental("Transporter2", "1988-02-15");
+            sut.AddRental("Avatar2", "1988-02-15");
  
             Assert.Throws<RentTwoCopiesOfSameMovieException>(() => {
-                sut.AddRental("Transporter2", "1988-02-15");
+                sut.AddRental("Avatar2", "1988-02-15");
             });
         }
 

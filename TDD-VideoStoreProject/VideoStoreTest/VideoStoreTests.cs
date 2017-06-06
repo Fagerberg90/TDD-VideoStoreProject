@@ -24,7 +24,7 @@ namespace VideoStoreTest
             rentals = Substitute.For<IRentals>();
             sut = new VideoStore(rentals);
             TestCustomer = new Customer(
-                 "Olle",
+                 "Goran",
                  "Pettersson",
                  "1850-09-22"
                 );
@@ -40,7 +40,8 @@ namespace VideoStoreTest
         {
             TestMovie.Title = "";
 
-            Assert.Throws<MovieTitleEmptyException>(() => {
+            Assert.Throws<MovieTitleEmptyException>(() =>
+            {
                 sut.AddMovie(TestMovie);
             });
         }
@@ -51,7 +52,8 @@ namespace VideoStoreTest
             sut.AddMovie(TestMovie);
             sut.AddMovie(TestMovie);
             sut.AddMovie(TestMovie);
-            Assert.Throws<TooManyIdenticalMoviesException>(() => {
+            Assert.Throws<TooManyIdenticalMoviesException>(() =>
+            {
                 sut.AddMovie(TestMovie);
             });
 
@@ -61,7 +63,8 @@ namespace VideoStoreTest
         public void NoDuplicatedCustomers()
         {
             sut.RegisterCustomer(TestCustomer);
-            Assert.Throws<DuplicateCustomerException>(() => {
+            Assert.Throws<DuplicateCustomerException>(() =>
+            {
                 sut.RegisterCustomer(TestCustomer);
             });
         }
@@ -70,7 +73,8 @@ namespace VideoStoreTest
         public void AddingCustomerWithInvalidSsn()
         {
             TestCustomer.Ssn = "1555-555-55";
-            Assert.Throws<NotvalidSsnException>(() => {
+            Assert.Throws<NotvalidSsnException>(() =>
+            {
                 sut.RegisterCustomer(TestCustomer);
             });
         }
@@ -86,7 +90,7 @@ namespace VideoStoreTest
         [Test]
         public void NotBeAbleToRentANonExistentMovie()
         {
-            
+
             TestMovie.Title = "Kalle Anka";
             sut.RegisterCustomer(TestCustomer);
             rentals.AddRental(TestMovie.Title, TestCustomer.Ssn);
@@ -102,7 +106,7 @@ namespace VideoStoreTest
         {
 
             TestMovie.Title = "Kalle Anka";
-          
+
             sut.AddMovie(TestMovie);
             rentals.AddRental(TestMovie.Title, TestCustomer.Ssn);
 
@@ -112,6 +116,21 @@ namespace VideoStoreTest
             });
         }
 
+        [Test]
+        public void AbleToReturnMovie()
+        {
+
+            rentals.GetRentalsFor(Arg.Any<string>()).Returns(new List<Rental>()
+            {
+                new Rental(DateTime.Now, TestMovie.Title, TestCustomer.Ssn)
+            });
+
+            sut.AddMovie(TestMovie);
+            sut.RegisterCustomer(TestCustomer);
+            sut.RentMovie(TestMovie.Title, TestCustomer.Ssn);
+            sut.ReturnMovie(TestMovie.Title, TestCustomer.Ssn);
+            rentals.Received(1).RemoveRental(TestMovie.Title, TestCustomer.Ssn);
+        }
 
     }
 }

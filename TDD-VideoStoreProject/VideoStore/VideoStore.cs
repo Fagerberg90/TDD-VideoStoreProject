@@ -73,7 +73,7 @@ namespace VideoStoreBL
                 {
                     throw new NotvalidSsnException();
                 }
-               else
+                else
                 {
                     if (CustomerList.Any(x => x.Ssn == socialSecurityNumber))
                     {
@@ -85,7 +85,7 @@ namespace VideoStoreBL
                     {
                         throw new CustomerDoesNotExistException();
                     }
-                
+
                 }
 
             }
@@ -98,7 +98,34 @@ namespace VideoStoreBL
 
         public void ReturnMovie(string movieTitle, string socialSecurityNumber)
         {
-            throw new NotImplementedException();
+            if (MoviesList.Any(x => x.Title == movieTitle))
+            {
+                var rex = new Regex(@"\d{4}-\d{2}-\d{2}");
+                if (!rex.IsMatch(socialSecurityNumber))
+                {
+                    throw new NotvalidSsnException();
+                }
+                else
+                {
+                    if (CustomerList.Any(x => x.Ssn == socialSecurityNumber))
+                    {
+
+                        Irentals.RemoveRental(movieTitle, socialSecurityNumber);
+
+                    }
+                    else
+                    {
+                        throw new CustomerDoesNotExistException();
+                    }
+
+                }
+
+            }
+            else
+            {
+                throw new MovieDoesNotExistException();
+
+            }
         }
     }
 }
