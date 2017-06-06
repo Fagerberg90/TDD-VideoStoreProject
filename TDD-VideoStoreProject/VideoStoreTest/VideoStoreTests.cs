@@ -29,7 +29,7 @@ namespace VideoStoreTest
         }
 
         [Test]
-        public void MovieTitleCannotBeEmpty()
+        public void MovieTitleCannotBeEmpty() //yesy
         {
             _testMovie.Title = "";
 
