@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VideoStoreBL
 {
@@ -34,14 +32,14 @@ namespace VideoStoreBL
                 }
                 else
                 {
-                    var newRental = new Rental(DateTime.Now.AddDays(3), movieTitle, socialSecurityNumber);
+                    var newRental = new Rental(dateTime.Now().AddDays(3), movieTitle, socialSecurityNumber);
 
                     Rentals.Add(newRental);
                 }
             }
             catch (CustomerDoesNotHaveAnyRentalsException)
             {
-                var newRental = new Rental(DateTime.Now.AddDays(3), movieTitle, socialSecurityNumber);
+                var newRental = new Rental(dateTime.Now().AddDays(3), movieTitle, socialSecurityNumber);
 
                 Rentals.Add(newRental);
             }

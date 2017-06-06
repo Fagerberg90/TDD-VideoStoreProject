@@ -1,60 +1,53 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VideoStoreBL;
 using NSubstitute;
-
 
 namespace VideoStoreTest
 {
     [TestFixture]
     public class VideoStoreTests
     {
-        private IVideoStore sut;
-        private IRentals rentals;
-        private Movie TestMovie;
-        private Customer TestCustomer;
+        private IVideoStore _sut;
+        private IRentals _rentals;
+        private Movie _testMovie;
+        private Customer _testCustomer;
 
         [SetUp]
         public void Setup()
         {
-            rentals = Substitute.For<IRentals>();
-            sut = new VideoStore(rentals);
-            TestCustomer = new Customer(
+            _rentals = Substitute.For<IRentals>();
+            _sut = new VideoStore(_rentals);
+            _testCustomer = new Customer(
                  "Goran",
                  "Pettersson",
                  "1850-09-22"
                 );
-
-            TestMovie = new Movie(
+            _testMovie = new Movie(
                 "Star Wars",
                  MovieGenre.SciFi
                 );
         }
 
         [Test]
-        public void MovieTitleCannotBeEmty()
+        public void MovieTitleCannotBeEmpty()
         {
-            TestMovie.Title = "";
+            _testMovie.Title = "";
 
             Assert.Throws<MovieTitleEmptyException>(() =>
             {
-                sut.AddMovie(TestMovie);
+                _sut.AddMovie(_testMovie);
             });
         }
 
         [Test]
         public void CannotAddMoreThanThreeIdenticalMovies()
         {
-            sut.AddMovie(TestMovie);
-            sut.AddMovie(TestMovie);
-            sut.AddMovie(TestMovie);
+            _sut.AddMovie(_testMovie);
+            _sut.AddMovie(_testMovie);
+            _sut.AddMovie(_testMovie);
             Assert.Throws<TooManyIdenticalMoviesException>(() =>
             {
-                sut.AddMovie(TestMovie);
+                _sut.AddMovie(_testMovie);
             });
 
         }
@@ -62,28 +55,28 @@ namespace VideoStoreTest
         [Test]
         public void NoDuplicatedCustomers()
         {
-            sut.RegisterCustomer(TestCustomer);
+            _sut.RegisterCustomer(_testCustomer);
             Assert.Throws<DuplicateCustomerException>(() =>
             {
-                sut.RegisterCustomer(TestCustomer);
+                _sut.RegisterCustomer(_testCustomer);
             });
         }
 
         [Test]
         public void AddingCustomerWithInvalidSsn()
         {
-            TestCustomer.Ssn = "1555-555-55";
+            _testCustomer.Ssn = "1555-555-55";
             Assert.Throws<NotvalidSsnException>(() =>
             {
-                sut.RegisterCustomer(TestCustomer);
+                _sut.RegisterCustomer(_testCustomer);
             });
         }
 
         [Test]
         public void CanRegisterCustomer()
         {
-            sut.RegisterCustomer(TestCustomer);
-            var result = sut.GetCustomers();
+            _sut.RegisterCustomer(_testCustomer);
+            var result = _sut.GetCustomers();
             Assert.IsNotNull(result);
         }
 
@@ -91,13 +84,13 @@ namespace VideoStoreTest
         public void NotBeAbleToRentANonExistentMovie()
         {
 
-            TestMovie.Title = "Kalle Anka";
-            sut.RegisterCustomer(TestCustomer);
-            rentals.AddRental(TestMovie.Title, TestCustomer.Ssn);
+            _testMovie.Title = "Kalle Anka";
+            _sut.RegisterCustomer(_testCustomer);
+            _rentals.AddRental(_testMovie.Title, _testCustomer.Ssn);
 
             Assert.Throws<MovieDoesNotExistException>(() =>
             {
-                sut.RentMovie(TestMovie.Title, TestCustomer.Ssn);
+                _sut.RentMovie(_testMovie.Title, _testCustomer.Ssn);
             });
         }
 
@@ -105,31 +98,40 @@ namespace VideoStoreTest
         public void NonRegistredCustomerCanNotRentMovie()
         {
 
-            TestMovie.Title = "Kalle Anka";
+            _testMovie.Title = "Kalle Anka";
 
-            sut.AddMovie(TestMovie);
-            rentals.AddRental(TestMovie.Title, TestCustomer.Ssn);
+            _sut.AddMovie(_testMovie);
+            _rentals.AddRental(_testMovie.Title, _testCustomer.Ssn);
 
             Assert.Throws<CustomerDoesNotExistException>(() =>
             {
-                sut.RentMovie(TestMovie.Title, TestCustomer.Ssn);
+                _sut.RentMovie(_testMovie.Title, _testCustomer.Ssn);
             });
         }
 
         [Test]
         public void AbleToReturnMovie()
         {
+            _sut.AddMovie(_testMovie);
+            _sut.RegisterCustomer(_testCustomer);
+            _sut.RentMovie(_testMovie.Title, _testCustomer.Ssn);
+            _sut.ReturnMovie(_testMovie.Title, _testCustomer.Ssn);
 
-            rentals.GetRentalsFor(Arg.Any<string>()).Returns(new List<Rental>()
+            _rentals.Received(1).RemoveRental(Arg.Any<string>(), Arg.Any<string>());
+        }
+
+        [Test]
+        public void RemoveRentalDoesNotReceiveAnyCallWhenYouPassBadSsn()
+        {
+            _sut.AddMovie(_testMovie);
+            _sut.RegisterCustomer(_testCustomer);
+            _sut.RentMovie(_testMovie.Title, _testCustomer.Ssn);
+            
+            Assert.Throws<NotvalidSsnException>(() =>
             {
-                new Rental(DateTime.Now, TestMovie.Title, TestCustomer.Ssn)
+                _sut.ReturnMovie(_testMovie.Title, "555-5-5");
             });
-
-            sut.AddMovie(TestMovie);
-            sut.RegisterCustomer(TestCustomer);
-            sut.RentMovie(TestMovie.Title, TestCustomer.Ssn);
-            sut.ReturnMovie(TestMovie.Title, TestCustomer.Ssn);
-            rentals.Received(1).RemoveRental(TestMovie.Title, TestCustomer.Ssn);
+            _rentals.DidNotReceive().RemoveRental(Arg.Any<string>(), Arg.Any<string>());
         }
 
     }

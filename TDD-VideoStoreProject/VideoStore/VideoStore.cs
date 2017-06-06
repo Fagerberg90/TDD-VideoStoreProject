@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace VideoStoreBL
 {
@@ -18,7 +15,7 @@ namespace VideoStoreBL
 
         public VideoStore(IRentals irental)
         {
-            this.Irentals = irental;
+            Irentals = irental;
         }
 
 
@@ -73,8 +70,7 @@ namespace VideoStoreBL
                 {
                     throw new NotvalidSsnException();
                 }
-                else
-                {
+
                     if (CustomerList.Any(x => x.Ssn == socialSecurityNumber))
                     {
 
@@ -85,9 +81,6 @@ namespace VideoStoreBL
                     {
                         throw new CustomerDoesNotExistException();
                     }
-
-                }
-
             }
             else
             {
@@ -105,21 +98,17 @@ namespace VideoStoreBL
                 {
                     throw new NotvalidSsnException();
                 }
-                else
+
+                if (CustomerList.Any(x => x.Ssn == socialSecurityNumber))
                 {
-                    if (CustomerList.Any(x => x.Ssn == socialSecurityNumber))
-                    {
 
-                        Irentals.RemoveRental(movieTitle, socialSecurityNumber);
-
-                    }
-                    else
-                    {
-                        throw new CustomerDoesNotExistException();
-                    }
+                    Irentals.RemoveRental(movieTitle, socialSecurityNumber);
 
                 }
-
+                else
+                {
+                    throw new CustomerDoesNotExistException();
+                }
             }
             else
             {
