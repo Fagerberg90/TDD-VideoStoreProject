@@ -28,6 +28,8 @@ namespace VideoStoreBL
 
         }
     }
+    public class RentalDoesNotExistException : Exception { }
+
     public static class ExeptionMessages
     {
         public const string LateRentalsReturnExceptionMessage = "Customer still has delayed movies that need to be returned before renting a new one.";

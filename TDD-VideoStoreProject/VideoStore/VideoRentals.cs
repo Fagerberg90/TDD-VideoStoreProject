@@ -60,10 +60,17 @@ namespace VideoStoreBL
 
         public void RemoveRental(string movieTitle, string socialSecurityNumber)
         {
-            var rentalToBeRemoved =
-                Rentals.FirstOrDefault(x => x.CustomerSsn == socialSecurityNumber && x.MovieTitle == movieTitle);
-
-            Rentals.Remove(rentalToBeRemoved);
+            if (Rentals.Any(x => x.CustomerSsn == socialSecurityNumber && x.MovieTitle == movieTitle))
+            {
+                var rentalToBeRemoved =
+                    Rentals.FirstOrDefault(x => x.CustomerSsn == socialSecurityNumber && x.MovieTitle == movieTitle);
+                Rentals.Remove(rentalToBeRemoved);
+            }
+            else
+            {
+                throw new RentalDoesNotExistException();
+            }
+            
         }
     }
 }
