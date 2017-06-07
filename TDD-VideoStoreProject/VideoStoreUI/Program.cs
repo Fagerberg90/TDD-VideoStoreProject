@@ -76,7 +76,7 @@ namespace VideoStoreUI
                         title = Console.ReadLine();
                         if (string.IsNullOrEmpty(title))
                         {
-                            Console.WriteLine("Movie title can not med empty!", Color.FromArgb(rgb[0], rgb[1], rgb[2]));
+                            Console.WriteLine("Movie title can not be empty!", Color.FromArgb(rgb[0], rgb[1], rgb[2]));
                             Console.ReadLine();
                             break;
                         }
@@ -133,6 +133,7 @@ namespace VideoStoreUI
                         Console.ReadLine();
                         break;
                     case "3":
+                        Console.Clear();
                         string getRentalsBySSN;
                         Console.WriteAscii("ENTER SSN OF RENTER", Color.FromArgb(rgb[0], rgb[1], rgb[2]));
                         getRentalsBySSN = Console.ReadLine();
@@ -143,6 +144,7 @@ namespace VideoStoreUI
                         }
                         break;
                     case "4":
+                        Console.Clear();
                         string rentTitle;
                         string ssn;
                         Console.WriteAscii("ENTER TITLE", Color.FromArgb(rgb[0], rgb[1], rgb[2]));
@@ -154,6 +156,7 @@ namespace VideoStoreUI
                         Console.WriteAscii("MOVIE RENTED!!", Color.FromArgb(rgb[0], rgb[1], rgb[2]));
                         break;
                     case "5":
+                        Console.Clear();
                         string returnTitle;
                         string returnSsn;
                         Console.WriteAscii("ENTER TITLE", Color.FromArgb(rgb[0], rgb[1], rgb[2]));
