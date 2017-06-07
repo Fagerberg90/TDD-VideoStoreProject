@@ -71,16 +71,16 @@ namespace VideoStoreBL
                     throw new NotvalidSsnException();
                 }
 
-                    if (CustomerList.Any(x => x.Ssn == socialSecurityNumber))
-                    {
+                if (CustomerList.Any(x => x.Ssn == socialSecurityNumber))
+                {
 
-                        Irentals.AddRental(movieTitle, socialSecurityNumber);
+                    Irentals.AddRental(movieTitle, socialSecurityNumber);
 
-                    }
-                    else
-                    {
-                        throw new CustomerDoesNotExistException();
-                    }
+                }
+                else
+                {
+                    throw new CustomerDoesNotExistException();
+                }
             }
             else
             {

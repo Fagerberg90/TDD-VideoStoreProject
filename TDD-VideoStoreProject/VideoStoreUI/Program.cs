@@ -16,8 +16,11 @@ namespace VideoStoreUI
     {
         static void Main(string[] args)
         {
+            var date = new OurDateTime();
+            var rentals = new VideoRentals(date);
 
-            Ui ui = new Ui();
+            var VidStore = new VideoStore(rentals);
+            Ui ui = new Ui( VidStore, rentals);
             ui.GenerateData();
             int R = 154;
             int G = 255;
@@ -178,17 +181,24 @@ namespace VideoStoreUI
 
     public class Ui
     {
-        IDateTime dateTime;
-        IRentals iRentals;
-        IVideoStore iVideoStore;
-        VideoStore videoStore;
-        VideoRentals videoRentals;
-
-        public Ui()
+        //private IDateTime dateTime;
+        //private IRentals iRentals;
+        //private IVideoStore iVideoStore;
+        //private VideoStore videoStore;
+        //private VideoRentals videoRentals;
+        private IVideoStore iVideoStore { get; set; }
+        private IRentals iRentals { get; set; }
+        public Ui(IVideoStore _videoStore, IRentals _rentals)
         {
-            iVideoStore = new VideoStore(iRentals);
-            iRentals = new VideoRentals(dateTime);
+            this.iVideoStore = _videoStore;
+            this.iRentals = _rentals;
         }
+
+        //public Ui()
+        //{
+        //    iVideoStore = new VideoStore(iRentals);
+        //    iRentals = new VideoRentals(dateTime);
+        //}
         public void AddMovie(Movie newMovie)
         {
             iVideoStore.AddMovie(newMovie);

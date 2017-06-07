@@ -84,9 +84,10 @@ namespace VideoStoreTest
         [Test]
         public void CustomerWithLateDueDateCanNotRentNewMovie()
         {
+            _dateTime.Now().Returns(DateTime.Now.AddDays(-4));
             _sut.AddRental("Die hard", "19880606");
             var rentals = _sut.GetRentalsFor("19880606");
-            rentals[0].DueDate = DateTime.Now.AddDays(-4);
+            rentals[0].DueDate = _dateTime.Now();
 
             Assert.Throws<LateRentalsReturnException>(() =>
             {
