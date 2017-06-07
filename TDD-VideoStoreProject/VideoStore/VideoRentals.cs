@@ -39,9 +39,9 @@ namespace VideoStoreBL
             }
             catch (CustomerDoesNotHaveAnyRentalsException)
             {
-                var newRental = new Rental(dateTime.Now().AddDays(3), movieTitle, socialSecurityNumber);
+                //var newRental = new Rental(dateTime.Now().AddDays(3), movieTitle, socialSecurityNumber);
 
-                Rentals.Add(newRental);
+                Rentals.Add(new Rental(dateTime.Now().AddDays(3), movieTitle, socialSecurityNumber));
             }
         }
 
